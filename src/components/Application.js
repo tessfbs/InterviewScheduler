@@ -5,7 +5,7 @@ import DayList from "./DayList";
 import "./Appointment"
 import Appointment from "./Appointment";
 // import InterviewerList from "./InterviewerList";
-import {getAppointmentsForDay} from "helpers/selectors"
+import {getAppointmentsForDay, getInterview} from "helpers/selectors"
 
 
 export default function Application(props) {
@@ -44,20 +44,23 @@ export default function Application(props) {
     /*empty dependency because API request does not depend on the state or props of thus component => never rerun this request */
   },[]);
 
-  const dailyAppointments = getAppointmentsForDay(state,state.day)
+  const dailyAppointments = getAppointmentsForDay(state,state.day);
 
   const AppointmentList = dailyAppointments.map((appointment) => {
+    const interview = getInterview(state, appointment.interview);
+    
     return (
-        // <Appointment 
-        //   key={appointment.id} 
-        //   id={appointment.id} 
-        //   time={appointment.time} 
-        //   interview={appointment.interview} 
-        // />
-          <Appointment 
-            key={appointment.id} 
-            {...appointment} 
-          />
+        <Appointment 
+          key={appointment.id} 
+          id={appointment.id} 
+          time={appointment.time} 
+          interview={interview} 
+        />
+        //***** */
+          // <Appointment 
+          //   key={appointment.id} 
+          //   {...appointment} 
+          // />
           //The ...appointment part expands the appointment object into individual key-value pairs, so the Appointment component will receive props like id={1}, time="12pm", and interview={/* interview object */}.
           //Using the spread syntax can be convenient when you have an object with many properties and you want to pass all of them as props to a component. It can also make the code more concise and easier to read.
     )
