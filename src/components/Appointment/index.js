@@ -2,7 +2,7 @@ import "./styles.scss"
 import Header from "./Header";
 import Show from "./Show";
 import Empty from "./Empty";
-import React, { Fragment } from 'react'
+import React from 'react'
 
 
 
