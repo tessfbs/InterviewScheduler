@@ -73,5 +73,25 @@ export  const getInterview = (state, interview) => {
   return results
 }
 
+export  const getInterviewersForDay = (state, day) => {
+
+  //state.days =>> array
+  let results = [];
+  state.days.forEach(element => {
+    results = element.name === day ? element.appointments : results;
+  });
+
+  //add the appointment object to the results array
+  let appointments = [];
+  results.forEach(element => {
+    appointments.push(state.appointments[element])
+  });
+
+  //interviewer to appointments array
+  
+  
+return appointments;
+}
+
 console.log(getInterview(state, state.appointments["3"].interview))
 
