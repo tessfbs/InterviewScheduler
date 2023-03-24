@@ -19,11 +19,6 @@ export default function Application(props) {
   });
 
   const setDay = day => setState({...state, day})
-  // const setDays = days => setState({...state, days})
-
-
-  // const [day, setDay] = useState("Monday")//combined in state/setState
-  // const [days, setDays] = useState([]); //combined  in state/setState
   
   //Requesting data from the API
   useEffect(() => {
