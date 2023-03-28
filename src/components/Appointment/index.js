@@ -43,6 +43,7 @@ export default function Appointment(props) {
     props
       .bookInterview(props.id, interview)
       .then (() => {
+        props.updateSpots(props.id, true)
         transition(SHOW);
       })
       .catch(error => {
@@ -58,6 +59,7 @@ export default function Appointment(props) {
     transition(DELETING,true) 
     props.cancelInterview(props.id)
      .then(() => {
+       props.updateSpots(props.id, false)
       transition(EMPTY) 
     })
       .catch(error => {
