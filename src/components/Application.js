@@ -73,6 +73,7 @@ export default function Application(props) {
   }
 
   function cancelInterview(id) {
+
     const appointment = {
       ...state.appointments[id],
       interview: null

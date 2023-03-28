@@ -34,7 +34,7 @@ export default function Appointment(props) {
     };
 
     transition(SAVING);
-    
+
     props.bookInterview(props.id, interview)
       .then (() => {
         transition(SHOW);
@@ -42,11 +42,15 @@ export default function Appointment(props) {
   }
 
   function OnDelete () {
-    transition(DELETING)
-    props.cancelInterview(props.id)
-    console.log(props.id)
-    transition(CONFIRM)
+    transition(CONFIRM) 
+  }
 
+  function cancelInterview () {
+    transition(DELETING) 
+    props.cancelInterview(props.id)
+     .then(() => {
+      transition(EMPTY) 
+    })
   }
 
   
@@ -80,6 +84,7 @@ export default function Appointment(props) {
     {mode === CONFIRM && 
     <Confirm 
     message="Are you sure you would like to delete?"
+    onConfirm={cancelInterview}
     onCancel={back}
     />}
 
