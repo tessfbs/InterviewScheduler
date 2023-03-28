@@ -100,6 +100,15 @@ export default function Application(props) {
 
   }
 
+  function editInterview(id) {
+    const appointment = {
+      ...state.appointments[id]
+    }
+
+    console.log('editInterview',appointment)
+
+  }
+
   const AppointmentList = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
     const interviewers = getInterviewersForDay(state, state.day)
@@ -114,6 +123,8 @@ export default function Application(props) {
         interviewers={interviewers}
         bookInterview={bookInterview}
         cancelInterview={cancelInterview}
+        editInterview={editInterview}
+        
       />
       //***** */
       // <Appointment 
