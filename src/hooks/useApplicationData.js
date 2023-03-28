@@ -104,7 +104,6 @@ export default function useApplicationData() {
   }
 
   function updateSpots(id, counter) {
-    const appointment = { ...state.appointments[id] }
     let appointmentDay = ""
     let SpotsAvailable = ""
     let newDays = [];
@@ -140,14 +139,14 @@ export default function useApplicationData() {
     const newDaysSorted = newDays.sort((a, b) => a.id - b.id);
     console.log('newDaysSorted', newDaysSorted)
 
-    
-
+    //test newState
     const newState = {
       ...state,
       days: newDays
     }
     console.log('NewState', newState)
 
+    //Set 
     setState({
       ...state,
       days: newDays

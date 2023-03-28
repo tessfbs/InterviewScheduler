@@ -43,10 +43,10 @@ export default function Appointment(props) {
     props
       .bookInterview(props.id, interview)
       .then (() => {
-        props.updateSpots(props.id, true)
         transition(SHOW);
       })
       .catch(error => {
+        props.updateSpots(props.id, true)
         transition(ERROR_SAVE,true)
       })
   }
