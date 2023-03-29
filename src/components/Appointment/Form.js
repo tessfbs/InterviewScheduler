@@ -17,12 +17,14 @@ export default function Form(props) {
       setError("Please select an interviewer");
       return
     }
+    setError("");
     props.onSave(student, interviewer);
   }
 
   const reset = () => {
     setStudent("");
     setInterviewer(null);
+    setError("");
   };
 
   const cancel = () => {
