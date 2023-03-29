@@ -43,7 +43,7 @@ export default function useApplicationData() {
       appointments: [],
       remainingSpots: 0
     };
-  
+
     //find the day that contains the appointment
     for (let day of state.days) {
       if (day.appointments.includes(id)) {
@@ -51,24 +51,24 @@ export default function useApplicationData() {
         spots.dayID = day.id;
       }
     };
-  
+
     //count the remaining spots
     spots.appointments.forEach(appointmentID => {
       if (newAppointments[appointmentID] && newAppointments[appointmentID].interview === null) {
         spots.remainingSpots++;
       }
     })
-  
+
     //update the day object
     const updatedDay = {
-      ...state.days[spots.dayID-1],
+      ...state.days[spots.dayID - 1],
       spots: spots.remainingSpots
     }
-  
+
     //update the days array
     const days = [...state.days]
-    days[spots.dayID-1] = updatedDay;
-  
+    days[spots.dayID - 1] = updatedDay;
+
     return days;
   }
 
@@ -203,7 +203,6 @@ export default function useApplicationData() {
 
 
   // }
-
 
 
   return { state, setDay, cancelInterview, editInterview, dailyAppointments, bookInterview, updateSpots }

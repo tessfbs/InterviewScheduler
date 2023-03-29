@@ -309,34 +309,3 @@ describe("Application", () => {
 
 });
 
-
-// import { render, waitForElement, fireEvent } from "@testing-library/react";
-
-// it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
-//   // Render the application and store the container value returned by render.
-//   const { container } = render(<Application />);
-
-//   // Wait until the text "Archie Cohen" is displayed.
-//   await waitForElement(() => getByText(container, "Archie Cohen"));
-
-//   // Find the appointment and click the "Add" button.
-//   const appointment = getAllByTestId(container, "appointment")[0];
-//   const addBtn = getByAltText(appointment, "Add");
-//   fireEvent.click(addBtn);
-
-//   // Find the student name input and enter a new name.
-//   const input = getByPlaceholderText(container, /enter student name/i);
-//   fireEvent.change(input, { target: { value: "Lydia Miller-Jones" } });
-
-//   // Find the interviewer and click on it.
-//   const interviewer = getByAltText(container, "Sylvia Palmer");
-//   fireEvent.click(interviewer);
-
-//   // Find the save button and click on it.
-//   const saveBtn = getByText(container, "Save");
-//   fireEvent.click(saveBtn);
-
-//   // Wait until the element with the new name is displayed.
-//   await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
-// });
-
