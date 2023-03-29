@@ -35,6 +35,43 @@ export default function useApplicationData() {
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
+  function updateSpots(state, newAppointments, id) {
+
+    //create a new object to store the dayID, appointments, and remainingSpots
+    let spots = {
+      dayID: 0,
+      appointments: [],
+      remainingSpots: 0
+    };
+  
+    //find the day that contains the appointment
+    for (let day of state.days) {
+      if (day.appointments.includes(id)) {
+        spots.appointments = [...day.appointments];
+        spots.dayID = day.id;
+      }
+    };
+  
+    //count the remaining spots
+    spots.appointments.forEach(appointmentID => {
+      if (newAppointments[appointmentID] && newAppointments[appointmentID].interview === null) {
+        spots.remainingSpots++;
+      }
+    })
+  
+    //update the day object
+    const updatedDay = {
+      ...state.days[spots.dayID-1],
+      spots: spots.remainingSpots
+    }
+  
+    //update the days array
+    const days = [...state.days]
+    days[spots.dayID-1] = updatedDay;
+  
+    return days;
+  }
+
   function bookInterview(id, interview) {
     console.log('bookInterview', id, interview);
     console.log('before State', state)
@@ -58,11 +95,14 @@ export default function useApplicationData() {
     console.log('bookInterview - appts', appointments)
     console.log('state', newState)
 
+    //update spots
+    const days = updateSpots(state, appointments, id);
+
     const url = `/api/appointments/${id}`
 
     return axios.put(url, appointment)
       .then(res => {
-        setState({ ...state, appointments });
+        setState({ ...state, days, appointments });
       })
   }
 
@@ -85,13 +125,14 @@ export default function useApplicationData() {
     };
     console.log(newState)
 
+    //update spots
+    const days = updateSpots(state, appointments, id);
+
     // deleting using API request
     const url = `http://localhost:8001/api/appointments/${id}`
     return axios
       .delete(url, appointment)
-      .then(() => setState({ ...state, appointments }))
-
-
+      .then(() => setState({ ...state, days, appointments }))
   }
 
   function editInterview(id) {
@@ -103,57 +144,65 @@ export default function useApplicationData() {
 
   }
 
-  function updateSpots(id, counter) {
-    let appointmentDay = ""
-    let SpotsAvailable = ""
-    let newDays = [];
 
-    //Find Day and Spots Available By Appointment Id
-    state.days.forEach(day => {
-      if (day.appointments.includes(id)) {
-        appointmentDay = day
-        SpotsAvailable = day.spots
-        console.log('appointmentDay', appointmentDay)
-        console.log('SpotsAvailable', SpotsAvailable)
-      } else {
-        newDays.push(day)
-      }
-    });
+  // function updateSpots(id, counter) {
+  //   let appointmentDay = ""
+  //   let SpotsAvailable = ""
+  //   let newDays = [];
 
-    console.log(newDays)
+  //   //Find Day and Spots Available By Appointment Id
+  //   state.days.forEach(day => {
+  //     if (day.appointments.includes(id)) {
+  //       appointmentDay = day
+  //       SpotsAvailable = day.spots
+  //       console.log('appointmentDay', appointmentDay)
+  //       console.log('SpotsAvailable', SpotsAvailable)
+  //     } else {
+  //       newDays.push(day)
+  //     }
+  //   });
 
-    //Update Spots Available
-    if (counter) {
-      SpotsAvailable++
-    } else {
-      SpotsAvailable--
-    }
+  //   console.log(newDays)
 
-    //Update Day
-    const updateDay = { ...appointmentDay, spots: SpotsAvailable }
-    console.log('updatedDay', updateDay)
+  //   //Update Spots Available
+  //   if (counter) {
+  //     SpotsAvailable++
+  //   } else {
+  //     SpotsAvailable--
+  //   }
 
-    //Update Days
-    newDays.push(updateDay)
+  //   //Update Day
+  //   const updateDay = { ...appointmentDay, spots: SpotsAvailable }
+  //   console.log('updatedDay', updateDay)
 
-    const newDaysSorted = newDays.sort((a, b) => a.id - b.id);
-    console.log('newDaysSorted', newDaysSorted)
+  //   //Update Days
+  //   newDays.push(updateDay)
 
-    //test newState
-    const newState = {
-      ...state,
-      days: newDays
-    }
-    console.log('NewState', newState)
+  //   const newDaysSorted = newDays.sort((a, b) => a.id - b.id);
+  //   console.log('newDaysSorted', newDaysSorted)
 
-    //Set 
-    setState({
-      ...state,
-      days: newDays
-    })
+  //   //test newState
+  //   const newState = {
+  //     ...state,
+  //     days: newDays
+  //   }
+  //   console.log('NewState', newState)
+
+  //   setState({
+  //     ...state,
+  //     days: newDays
+  //   })
+
+  //   // const url = `http://localhost:8001/api/appointments/${id}`
+
+  //   // //axios request to update spots
+  //   // return axios.put(url, updateDay)
+  //   //   .then(res => {
+  //   //     setState({ ...state, days: newDays });
+  //   //   })
 
 
-  }
+  // }
 
 
 

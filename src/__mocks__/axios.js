@@ -81,5 +81,20 @@ export default {
         data: fixtures.interviewers
       });
     }
+  }),
+  //mock axios put request from useApplicationData.js
+  put: jest.fn(url => {
+      return Promise.resolve({
+        status: 204,
+        statusText: "No Content"
+      });
+  }),
+  //mock axios delete request from useApplicationData.js
+  delete: jest.fn(url => {
+      return Promise.resolve({
+        status: 204,
+        statusText: "No Content"
+      });
+
   })
 };

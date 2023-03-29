@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 //history of previous modes that the appointment has been in >> 
 // ['empty', 'create', 'saving', 'show', 'error, 'error_save]
