@@ -19,9 +19,5 @@ describe("should navigate to Tuesday", () => {
       .click()
       .should("have.class", "day-list__item--selected")
 
-
-
-
-
   });
 });
