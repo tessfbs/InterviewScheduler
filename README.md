@@ -52,7 +52,9 @@ npm run cypress
 
 ## DEMO VIDEO
 
-<img src="https://github.com/tessfbs/tweeter/blob/master/public/images/Tweeter-demo.gif?raw=true"/>
+<img src="https://github.com/tessfbs/InterviewScheduler/blob/master/public/images/Video/Screen%20Recording%202023-03-30%20at%209.05.02%20PM.gif?raw=true"/>
+
+
 
 
 
