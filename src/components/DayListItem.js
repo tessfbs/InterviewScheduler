@@ -2,28 +2,26 @@ import React from "react";
 import classNames from "classnames";
 import "./DayListItem.scss";
 
-
-
 export default function DayListItem(props) {
 
-  const dayClass = classNames("day-list__item",{
-    "day-list__item--selected":props.selected,
-    "day-list__item--full":props.spots === 0 && true
+  const dayClass = classNames("day-list__item", {
+    "day-list__item--selected": props.selected,
+    "day-list__item--full": props.spots === 0 && true
   }
   )
   return (
-    <li 
-    className={dayClass} 
-    onClick={() => props.setDay(props.name)}
-    selected={props.selected}
-    data-testid="day"
+    <li
+      className={dayClass}
+      onClick={() => props.setDay(props.name)}
+      selected={props.selected}
+      data-testid="day"
     >
       <h2 className="text--regular">{props.name}</h2>
       {props.spots === 0 && <h3 className="text--light"> no spots remaining</h3>}
       {props.spots === 1 && <h3 className="text--light">{props.spots} spot remaining</h3>}
       {props.spots > 1 && <h3 className="text--light">{props.spots} spots remaining</h3>}
-      
-      
+
+
     </li>
   );
 
@@ -39,7 +37,7 @@ export default function DayListItem(props) {
 
 // We use the spots prop for two purposes:
 
-    // 1) To display the text "{props.spots} spots remaining" 
+    // 1) To display the text "{props.spots} spots remaining"
     // 2) to determine if the day is full.
 
 // The DayListItem "knows" what it means to be full (if props.spots is 0, the day is full) but not what it means to be selected. It uses this prop directly to determine which styles to apply.

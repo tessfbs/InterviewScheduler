@@ -9,35 +9,32 @@ import Status from "./Status";
 import Confirm from "./Confirm";
 import Error from "./Error";
 
-
-
 export default function Appointment(props) {
+
+  // Mode constants
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
-  const DELETING = "STATUS"
-  const SAVING = "SAVING"
-  const CONFIRM = "CONFIRM"
-  const EDIT = "EDIT"
-  const ERROR_SAVE = "ERROR_SAVE"
-  const ERROR_DELETE = "ERROR_DELETE"
+  const DELETING = "STATUS";
+  const SAVING = "SAVING";
+  const CONFIRM = "CONFIRM";
+  const EDIT = "EDIT";
+  const ERROR_SAVE = "ERROR_SAVE";
+  const ERROR_DELETE = "ERROR_DELETE";
 
-
-
+  // Mode transitions
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   )
 
-
   function save(name, interviewer) { //name: student name, interviewer: interviewer id
-    console.log('interviewer from Appointment', interviewer)
-    console.log('interview', props.interview)
 
     const interview = {
       student: name,
       interviewer: interviewer
     };
 
+    // Transition to SAVING mode
     transition(SAVING);
 
     props
@@ -46,6 +43,7 @@ export default function Appointment(props) {
         transition(SHOW);
       })
 
+      // If error, transition to ERROR_SAVE mode
       .catch(error => {
         transition(ERROR_SAVE, true)
       })
@@ -55,23 +53,24 @@ export default function Appointment(props) {
     transition(CONFIRM)
   }
 
+  // Cancel interview
   function destroy() {
-    transition(DELETING, true)
+    transition(DELETING, true);
     props.cancelInterview(props.id)
       .then(() => {
-        transition(EMPTY)
+        transition(EMPTY);
       })
       .catch(error => {
-        transition(ERROR_DELETE, true)
+        transition(ERROR_DELETE, true);
       })
   }
 
+  // Edit interview
   function editInterview() {
-    props.editInterview(props.id)
-    console.log('student and interviewer', props.interview.student, props.interview.interviewer)
-    transition(EDIT)
+    props.editInterview(props.id);
+    console.log('student and interviewer', props.interview.student, props.interview.interviewer);
+    transition(EDIT);
   }
-
 
   return (
     <article
@@ -82,7 +81,6 @@ export default function Appointment(props) {
       <Header
         time={props.time}
       />
-      {/* {props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer.name}/> : <Empty /> } */}
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
 
       {mode === SHOW &&

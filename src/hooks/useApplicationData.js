@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors"
+import { getAppointmentsForDay } from "helpers/selectors"
 
 
 export default function useApplicationData() {
@@ -16,9 +16,9 @@ export default function useApplicationData() {
 
   //Requesting data from the API
   useEffect(() => {
-    const GET_DAYS = "/api/days"
-    const GET_APPOINTMENTS = "/api/appointments"
-    const GET_INTERVIEWERS = "/api/interviewers"
+    const GET_DAYS = "/api/days";
+    const GET_APPOINTMENTS = "/api/appointments";
+    const GET_INTERVIEWERS = "/api/interviewers";
 
     Promise.all([
       axios.get(GET_DAYS),
@@ -33,8 +33,7 @@ export default function useApplicationData() {
     /*empty dependency because API request does not depend on the state or props of thus component => never rerun this request */
   }, []);
 
-  const dailyAppointments = getAppointmentsForDay(state, state.day);
-
+  // Update spots
   function updateSpots(state, newAppointments, id) {
 
     //create a new object to store the dayID, appointments, and remainingSpots
@@ -72,9 +71,13 @@ export default function useApplicationData() {
     return days;
   }
 
+  // Get appointments for the day
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
+
+  // Book an interview
   function bookInterview(id, interview) {
     console.log('bookInterview', id, interview);
-    console.log('before State', state)
+    console.log('before State', state);
 
     const appointment = {
       ...state.appointments[id],
@@ -91,9 +94,9 @@ export default function useApplicationData() {
     };
 
 
-    console.log('bookInterview - appt', appointment)
-    console.log('bookInterview - appts', appointments)
-    console.log('state', newState)
+    console.log('bookInterview - appt', appointment);
+    console.log('bookInterview - appts', appointments);
+    console.log('state', newState);
 
     //update spots
     const days = updateSpots(state, appointments, id);
@@ -106,13 +109,14 @@ export default function useApplicationData() {
       })
   }
 
+  // Cancel an interview
   function cancelInterview(id) {
 
     const appointment = {
       ...state.appointments[id],
       interview: null
     }
-    console.log('cancel appt', appointment)
+    console.log('cancel appt', appointment);
 
     const appointments = {
       ...state.appointments,
@@ -123,7 +127,7 @@ export default function useApplicationData() {
       ...state,
       appointments
     };
-    console.log(newState)
+    console.log(newState);
 
     //update spots
     const days = updateSpots(state, appointments, id);
@@ -135,14 +139,19 @@ export default function useApplicationData() {
       .then(() => setState({ ...state, days, appointments }))
   }
 
+  // Edit an interview
   function editInterview(id) {
     const appointment = {
       ...state.appointments[id]
     }
 
-    console.log('editInterview', appointment)
+    console.log('editInterview', appointment);
 
   }
+
+  return { state, setDay, cancelInterview, editInterview, dailyAppointments, bookInterview, updateSpots }
+
+}
 
 
   // function updateSpots(id, counter) {
@@ -203,8 +212,3 @@ export default function useApplicationData() {
 
 
   // }
-
-
-  return { state, setDay, cancelInterview, editInterview, dailyAppointments, bookInterview, updateSpots }
-
-}

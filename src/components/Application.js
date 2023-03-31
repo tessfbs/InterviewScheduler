@@ -3,20 +3,18 @@ import "components/Application.scss";
 import DayList from "./DayList";
 import "./Appointment"
 import Appointment from "./Appointment";
-// import InterviewerList from "./InterviewerList";
 import { getInterview, getInterviewersForDay } from "helpers/selectors"
 import useApplicationData from "hooks/useApplicationData";
 
-
 export default function Application(props) {
 
+  // Get the state and the functions from the custom hook
+  const { state, setDay, cancelInterview, editInterview, dailyAppointments, bookInterview, updateSpots } = useApplicationData();
 
-  const {state, setDay, cancelInterview, editInterview, dailyAppointments, bookInterview, updateSpots } = useApplicationData()
-
-
+  // Build the appointment list
   const AppointmentList = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
-    const interviewers = getInterviewersForDay(state, state.day)
+    const interviewers = getInterviewersForDay(state, state.day);
 
     return (
       <Appointment
@@ -29,7 +27,7 @@ export default function Application(props) {
         cancelInterview={cancelInterview}
         editInterview={editInterview}
         updateSpots={updateSpots}
-        
+
       />
       //***** */
       // <Appointment 
@@ -41,14 +39,9 @@ export default function Application(props) {
     )
   })
 
-
-
-
-
   return (
     <main className="layout">
       <section className="sidebar">
-        {/* Replace this with the sidebar elements during the "Project Setup & Familiarity" activity. */}
         <img
           className="sidebar--centered"
           src="images/logo.png"
@@ -73,7 +66,6 @@ export default function Application(props) {
         {AppointmentList}
         <Appointment key="last" time="5pm" />
       </section>
-
     </main>
   );
 }
