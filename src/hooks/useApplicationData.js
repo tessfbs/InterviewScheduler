@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { getAppointmentsForDay } from "helpers/selectors"
-
 
 export default function useApplicationData() {
 
@@ -71,9 +69,6 @@ export default function useApplicationData() {
     return days;
   }
 
-  // Get appointments for the day
-  const dailyAppointments = getAppointmentsForDay(state, state.day);
-
   // Book an interview
   function bookInterview(id, interview) {
     console.log('bookInterview', id, interview);
@@ -133,7 +128,7 @@ export default function useApplicationData() {
     const days = updateSpots(state, appointments, id);
 
     // deleting using API request
-    const url = `http://localhost:8001/api/appointments/${id}`
+    const url = `/api/appointments/${id}`
     return axios
       .delete(url, appointment)
       .then(() => setState({ ...state, days, appointments }))
@@ -149,66 +144,6 @@ export default function useApplicationData() {
 
   }
 
-  return { state, setDay, cancelInterview, editInterview, dailyAppointments, bookInterview, updateSpots }
+  return { state, setDay, cancelInterview, editInterview, bookInterview }
 
 }
-
-
-  // function updateSpots(id, counter) {
-  //   let appointmentDay = ""
-  //   let SpotsAvailable = ""
-  //   let newDays = [];
-
-  //   //Find Day and Spots Available By Appointment Id
-  //   state.days.forEach(day => {
-  //     if (day.appointments.includes(id)) {
-  //       appointmentDay = day
-  //       SpotsAvailable = day.spots
-  //       console.log('appointmentDay', appointmentDay)
-  //       console.log('SpotsAvailable', SpotsAvailable)
-  //     } else {
-  //       newDays.push(day)
-  //     }
-  //   });
-
-  //   console.log(newDays)
-
-  //   //Update Spots Available
-  //   if (counter) {
-  //     SpotsAvailable++
-  //   } else {
-  //     SpotsAvailable--
-  //   }
-
-  //   //Update Day
-  //   const updateDay = { ...appointmentDay, spots: SpotsAvailable }
-  //   console.log('updatedDay', updateDay)
-
-  //   //Update Days
-  //   newDays.push(updateDay)
-
-  //   const newDaysSorted = newDays.sort((a, b) => a.id - b.id);
-  //   console.log('newDaysSorted', newDaysSorted)
-
-  //   //test newState
-  //   const newState = {
-  //     ...state,
-  //     days: newDays
-  //   }
-  //   console.log('NewState', newState)
-
-  //   setState({
-  //     ...state,
-  //     days: newDays
-  //   })
-
-  //   // const url = `http://localhost:8001/api/appointments/${id}`
-
-  //   // //axios request to update spots
-  //   // return axios.put(url, updateDay)
-  //   //   .then(res => {
-  //   //     setState({ ...state, days: newDays });
-  //   //   })
-
-
-  // }

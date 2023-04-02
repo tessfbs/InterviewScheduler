@@ -1,15 +1,18 @@
 import React from "react";
 import "components/Application.scss";
 import DayList from "./DayList";
-import "./Appointment"
+import "./Appointment";
 import Appointment from "./Appointment";
-import { getInterview, getInterviewersForDay } from "helpers/selectors"
+import { getInterview, getInterviewersForDay, getAppointmentsForDay } from "helpers/selectors";
 import useApplicationData from "hooks/useApplicationData";
 
 export default function Application(props) {
 
   // Get the state and the functions from the custom hook
-  const { state, setDay, cancelInterview, editInterview, dailyAppointments, bookInterview, updateSpots } = useApplicationData();
+  const { state, setDay, cancelInterview, editInterview, bookInterview } = useApplicationData();
+
+  // Get appointments for the day
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
 
   // Build the appointment list
   const AppointmentList = dailyAppointments.map((appointment) => {
@@ -26,18 +29,9 @@ export default function Application(props) {
         bookInterview={bookInterview}
         cancelInterview={cancelInterview}
         editInterview={editInterview}
-        updateSpots={updateSpots}
-
       />
-      //***** */
-      // <Appointment 
-      //   key={appointment.id} 
-      //   {...appointment} 
-      // />
-      //The ...appointment part expands the appointment object into individual key-value pairs, so the Appointment component will receive props like id={1}, time="12pm", and interview={/* interview object */}.
-      //Using the spread syntax can be convenient when you have an object with many properties and you want to pass all of them as props to a component. It can also make the code more concise and easier to read.
-    )
-  })
+    );
+  });
 
   return (
     <main className="layout">

@@ -3,6 +3,7 @@ import classNames from "classnames";
 import "./DayListItem.scss";
 
 export default function DayListItem(props) {
+  
 
   const dayClass = classNames("day-list__item", {
     "day-list__item--selected": props.selected,
@@ -27,7 +28,6 @@ export default function DayListItem(props) {
 
 
 }
-
 
 
 // name:String the name of the day
