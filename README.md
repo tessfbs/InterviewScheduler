@@ -36,6 +36,17 @@ npm test
 npm run cypress
 ```
 
+## API Server
+
+Open up a new terminal window and follow these steps:
+
+1. Clone the API server repository by running the following command:
+```sh
+git clone https://github.com/lighthouse-labs/scheduler-api
+```
+2. Read the instructions outlined in the `README.md` file to continue with the setup process.
+
+
 ## How to Use
 
 1. Start by selecting a day from the list of available days.
