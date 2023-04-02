@@ -7,32 +7,32 @@ export default function useVisualMode(initial) {
   const [history, setHistory] = useState([initial]);
 
   //transition --- move to a new mode
-  const transition = (value, status) => {
+  const transition = (newMode, status) => {
     // Passing "true" to transition(THIRD, true) >> Transition to THIRD by REPLACING SECOND 
     if (status) {
-      history.pop();
-      setMode(value);
-      setHistory([...history, value]);
+      setHistory(prevHistory => {
+        const newHistory = [...prevHistory];
+        newHistory.pop();
+        newHistory.push(newMode);
+        return newHistory;
+      });
+      setMode(newMode);
     } else {
-      setMode(value);
-      setHistory([...history, value]);
+      setHistory(prevHistory => [...prevHistory, newMode]);
+      setMode(newMode);
     }
-  }
+  };
 
   //back --- move backwards in time
   const back = () => {
-    // console.log('history',history)
-    if (history.length === 1) {
-      setMode(history[0]);
-    } else {
-      let currentMode = history.pop();
-      let prevMode = history.pop();
-      // console.log('curr. mode',currentMode)
-      // console.log('prev. mode',prevMode)
-      setMode(prevMode);
-
+    if (history.length > 1) {
+      const newHistory = [...history];
+      newHistory.pop();
+      setHistory(newHistory);
+      setMode(newHistory[newHistory.length - 1]);
     }
-  }
+  };
 
-  return { mode, transition, back, history };
+  return { mode, transition, back };
 }
+
